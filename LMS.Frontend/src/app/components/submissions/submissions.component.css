@@ -1,0 +1,38 @@
+.submissions-container {
+  padding: 2rem;
+}
+
+.submission-item {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submission-info h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: #edf2f7;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.status-badge.graded {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #718096;
+}

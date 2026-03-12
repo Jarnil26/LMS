@@ -1,0 +1,78 @@
+<div class="courses-container">
+  <div class="header-actions">
+    <h1>{{ currentUser?.role === 'Teacher' ? 'My Courses' : (isBrowsing ? 'Available Courses' : 'My Enrolled Courses') }}</h1>
+    <div class="header-btns">
+      <button *ngIf="currentUser?.role === 'Student'" class="btn btn-outline" (click)="toggleBrowsing()">
+        {{ isBrowsing ? 'View My Enrolled Courses' : 'Browse All Courses' }}
+      </button>
+      <button *ngIf="currentUser?.role === 'Teacher'" class="btn btn-primary" (click)="toggleModal()">Create New Course</button>
+    </div>
+  </div>
+
+  <!-- Create Course Modal -->
+  <div class="modal-backdrop" *ngIf="showModal" (click)="toggleModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Create New Course</h2>
+        <button class="close-btn" (click)="toggleModal()">&times;</button>
+      </div>
+      <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="modal-body">
+        <div class="form-group">
+          <label for="title">Course Title</label>
+          <input type="text" id="title" formControlName="title" placeholder="e.g. Introduction to Angular">
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" formControlName="category">
+            <option value="">Select Category</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Business">Business</option>
+            <option value="Arts">Arts</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" formControlName="description" rows="4"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" (click)="toggleModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="courseForm.invalid || loading">
+            {{ loading ? 'Creating...' : 'Create Course' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <p>Loading courses...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="courses-grid">
+    <div *ngFor="let course of courses" class="course-card">
+      <div class="course-header">
+        <h3>{{ course.title }}</h3>
+        <span class="badge">{{ course.category }}</span>
+      </div>
+      <div class="course-body">
+        <p>{{ course.description | slice:0:100 }}{{ course.description.length > 100 ? '...' : '' }}</p>
+        <div class="course-meta">
+          <span>👥 {{ course.studentCount || 0 }} Students</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <button class="btn btn-outline">View Details</button>
+        <button *ngIf="isBrowsing && currentUser?.role === 'Student'" class="btn btn-primary" (click)="enroll(course.id)">Enroll Now</button>
+      </div>
+    </div>
+
+    <div *ngIf="courses.length === 0" class="empty-state">
+      <p>No courses found.</p>
+    </div>
+  </div>
+</div>

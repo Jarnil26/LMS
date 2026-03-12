@@ -1,0 +1,71 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Welcome, {{ currentUser?.fullName | titlecase }}</h1>
+    <p class="subtitle">{{ userRole }} Dashboard</p>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading dashboard...</div>
+
+  <div *ngIf="!loading" class="dashboard-content">
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-body">
+          <p class="stat-label">Total Courses</p>
+          <p class="stat-value">{{ stats.totalCourses }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-body">
+          <p class="stat-label">Enrolled Students</p>
+          <p class="stat-value">{{ stats.totalStudents }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-body">
+          <p class="stat-label">Pending Work</p>
+          <p class="stat-value">{{ stats.pendingAssignments }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-body">
+          <p class="stat-label">Completed</p>
+          <p class="stat-value">{{ stats.completedSubmissions }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Courses -->
+    <div class="recent-section" *ngIf="recentCourses.length > 0">
+      <h2>Recent Courses</h2>
+      <div class="courses-grid">
+        <div class="course-card" *ngFor="let course of recentCourses">
+          <div class="course-header">
+            <h3>{{ course.title }}</h3>
+            <span class="student-badge">{{ course.studentCount }} students</span>
+          </div>
+          <p class="course-desc">{{ course.description }}</p>
+          <div class="course-footer">
+            <span class="teacher">{{ course.teacherName }}</span>
+            <button class="btn-small">View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="recentCourses.length === 0">
+      <div class="empty-icon">📚</div>
+      <h3>No Courses Yet</h3>
+      <p>Start by exploring available courses or creating one.</p>
+      <button class="btn btn-primary">Browse Courses</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+.grades-container {
+  padding: 2rem;
+}
+
+.grades-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.gpa-card {
+  background: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.gpa-card .label {
+  display: block;
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.gpa-card .value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2b6cb0;
+}
+
+.grades-table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.grades-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grades-table th {
+  background: #f7fafc;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.grades-table td {
+  padding: 1rem;
+  border-top: 1px solid #edf2f7;
+}
+
+.grade-cell {
+  font-weight: 600;
+  color: #2f855a;
+}
+
+.status-pass {
+  color: #38a169;
+  font-size: 0.875rem;
+}
+
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #718096;
+}

@@ -1,0 +1,44 @@
+<div class="grades-container">
+  <div class="grades-header">
+    <h1>Academic Progress</h1>
+    <div class="gpa-card">
+      <span class="label">Average Grade</span>
+      <span class="value">{{ gpa | number:'1.1-2' }}%</span>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <p>Loading grades...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="grades-table-container">
+    <table class="grades-table">
+      <thead>
+        <tr>
+          <th>Assignment</th>
+          <th>Course</th>
+          <th>Date Assigned</th>
+          <th>Grade</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sub of gradedSubmissions">
+          <td>{{ sub.assignmentTitle }}</td>
+          <td>{{ sub.courseName }}</td>
+          <td>{{ sub.submissionDate | date:'mediumDate' }}</td>
+          <td class="grade-cell">{{ sub.grade }}%</td>
+          <td><span class="status-pass">Passed</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="gradedSubmissions.length === 0" class="empty-state">
+      <p>No graded assignments yet.</p>
+    </div>
+  </div>
+</div>

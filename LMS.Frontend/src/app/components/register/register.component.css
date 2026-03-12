@@ -1,0 +1,135 @@
+.register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
+  padding: 20px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 30px;
+
+  h1 {
+    color: #0f172a;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+form {
+  .form-group {
+    margin-bottom: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #0f172a;
+      font-weight: 500;
+      font-size: 13px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: all 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      &.is-invalid {
+        border-color: #ef4444;
+      }
+    }
+
+    .invalid-feedback {
+      color: #ef4444;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+  }
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+
+  &.btn-primary {
+    background-color: #2563eb;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: #1d4ed8;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.alert {
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 13px;
+
+  &.alert-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

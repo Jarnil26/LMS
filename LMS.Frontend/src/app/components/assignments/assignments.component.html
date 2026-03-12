@@ -1,0 +1,71 @@
+<div class="assignments-container">
+  <div class="header-actions">
+    <h1>{{ currentUser?.role === 'Teacher' ? 'My Assignments' : 'Assignments' }}</h1>
+    <button *ngIf="currentUser?.role === 'Teacher'" class="btn btn-primary" (click)="toggleModal()">Create New Assignment</button>
+  </div>
+  
+  <div *ngIf="loading" class="loading-state">
+    <p>Loading assignments...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Create Assignment Modal -->
+  <div class="modal-backdrop" *ngIf="showModal" (click)="toggleModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Create New Assignment</h2>
+        <button class="close-btn" (click)="toggleModal()">&times;</button>
+      </div>
+      <form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()" class="modal-body">
+        <div class="form-group">
+          <label for="courseId">Course</label>
+          <select id="courseId" formControlName="courseId">
+            <option value="">Select Course</option>
+            <option *ngFor="let course of myCourses" [value]="course.id">{{ course.title }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="title">Assignment Title</label>
+          <input type="text" id="title" formControlName="title" placeholder="e.g. Unit 1 Quiz">
+        </div>
+        <div class="form-group">
+          <label for="dueDate">Due Date</label>
+          <input type="datetime-local" id="dueDate" formControlName="dueDate">
+        </div>
+        <div class="form-group">
+          <label for="description">Description (HTML allowed)</label>
+          <textarea id="description" formControlName="description" rows="4"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" (click)="toggleModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="assignmentForm.invalid || loading">
+            {{ loading ? 'Creating...' : 'Create Assignment' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error" class="assignments-list">
+    <div *ngFor="let assignment of assignments" class="assignment-item">
+      <div class="assignment-info">
+        <div class="assignment-header">
+          <h3>{{ assignment.title }}</h3>
+          <span class="course-badge">{{ assignment.courseName }}</span>
+        </div>
+        <p class="due-date text-muted">Due: {{ assignment.dueDate | date:'medium' }}</p>
+      </div>
+      <div class="assignment-actions">
+        <button *ngIf="currentUser?.role === 'Student'" class="btn btn-primary">Submit Work</button>
+        <button *ngIf="currentUser?.role === 'Teacher'" class="btn btn-outline" [routerLink]="['/grading', assignment.id]">View Submissions</button>
+      </div>
+    </div>
+
+    <div *ngIf="assignments.length === 0" class="empty-state">
+      <p>No assignments found.</p>
+    </div>
+  </div>
+</div>

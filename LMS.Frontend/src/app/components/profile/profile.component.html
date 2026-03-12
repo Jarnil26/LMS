@@ -1,0 +1,47 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="avatar-large">{{ currentUser?.fullName?.charAt(0) }}</div>
+      <h1>My Profile</h1>
+      <p class="role-badge">{{ currentUser?.role }}</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input 
+          type="text" 
+          id="fullName" 
+          name="fullName"
+          class="form-control" 
+          [(ngModel)]="profileModel.fullName" 
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email"
+          class="form-control" 
+          [(ngModel)]="profileModel.email" 
+          required
+        />
+      </div>
+
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="loading || !profileForm.valid">
+        {{ loading ? 'Saving...' : 'Save Changes' }}
+      </button>
+    </form>
+  </div>
+</div>

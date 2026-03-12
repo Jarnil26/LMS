@@ -1,0 +1,68 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h2 class="logo">LMS</h2>
+    <p class="tagline">Learning Platform</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <a (click)="navigateTo('/dashboard')" 
+         class="nav-link" 
+         [class.active]="isActive('dashboard')">
+        <i class="icon">📊</i>
+        <span>Dashboard</span>
+      </a>
+
+      <a (click)="navigateTo('/courses')" 
+         class="nav-link" 
+         [class.active]="isActive('courses')">
+        <i class="icon">📚</i>
+        <span>Courses</span>
+      </a>
+
+      <a (click)="navigateTo('/assignments')" 
+         class="nav-link" 
+         [class.active]="isActive('assignments')">
+        <i class="icon">📝</i>
+        <span>Assignments</span>
+      </a>
+
+      <a *ngIf="currentUser?.role === 'Student'" 
+         (click)="navigateTo('/submissions')" 
+         class="nav-link" 
+         [class.active]="isActive('submissions')">
+        <i class="icon">📤</i>
+        <span>Submissions</span>
+      </a>
+
+      <a *ngIf="currentUser?.role === 'Student'" 
+         (click)="navigateTo('/grades')" 
+         class="nav-link" 
+         [class.active]="isActive('grades')">
+        <i class="icon">⭐</i>
+        <span>Grades</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-avatar">{{ currentUser?.fullName?.charAt(0)?.toUpperCase() }}</div>
+      <div class="user-info">
+        <p class="user-name">{{ currentUser?.fullName }}</p>
+        <p class="user-role">{{ currentUser?.role }}</p>
+      </div>
+    </div>
+
+    <div class="sidebar-actions">
+      <a (click)="navigateTo('/profile')" class="action-link">
+        <i>⚙️</i>
+        <span>Profile</span>
+      </a>
+      <a (click)="onLogout()" class="action-link logout">
+        <i>🚪</i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+</div>

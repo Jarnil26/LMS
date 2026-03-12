@@ -1,0 +1,64 @@
+<div class="grading-container">
+  <div class="header">
+    <button class="btn-back" routerLink="/assignments">&larr; Back to Assignments</button>
+    <h1>Grading Submissions</h1>
+  </div>
+
+  <div *ngIf="loading && !gradingMode" class="loading-state">
+    <p>Loading submissions...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="grading-layout" *ngIf="!loading || gradingMode">
+    <!-- Submissions List -->
+    <div class="submissions-list" [class.hidden]="gradingMode">
+      <h3>Select a student to grade</h3>
+      <div *ngFor="let sub of submissions" class="submission-card" (click)="selectSubmission(sub)">
+        <div class="sub-info">
+          <p class="student-name">{{ sub.studentName }}</p>
+          <p class="sub-date text-muted">{{ sub.submittedAt | date:'medium' }}</p>
+        </div>
+        <div class="sub-status">
+          <span *ngIf="sub.isGraded" class="badge-success">Graded: {{ sub.grade }}</span>
+          <span *ngIf="!sub.isGraded" class="badge-warning">Pending</span>
+        </div>
+      </div>
+      <div *ngIf="submissions.length === 0" class="empty-state">
+        <p>No submissions found for this assignment.</p>
+      </div>
+    </div>
+
+    <!-- Grading Panel -->
+    <div class="grading-panel" *ngIf="gradingMode && selectedSubmission">
+      <div class="panel-header">
+        <h3>Grading: {{ selectedSubmission.studentName }}</h3>
+        <button class="close-btn" (click)="cancelGrading()">&times;</button>
+      </div>
+      
+      <div class="submission-details">
+        <p><strong>Submitted At:</strong> {{ selectedSubmission.submittedAt | date:'medium' }}</p>
+        <p><strong>Attachment:</strong> <a [href]="selectedSubmission.fileUrl" target="_blank" class="link">View Submission File</a></p>
+      </div>
+
+      <form [formGroup]="gradeForm" (ngSubmit)="onSubmitGrade()" class="grade-form">
+        <div class="form-group">
+          <label for="grade">Grade (0-100)</label>
+          <input type="number" id="grade" formControlName="grade" min="0" max="100">
+        </div>
+        <div class="form-group">
+          <label for="feedback">Feedback</label>
+          <textarea id="feedback" formControlName="feedback" rows="6"></textarea>
+        </div>
+        <div class="panel-footer">
+          <button type="button" class="btn btn-outline" (click)="cancelGrading()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="gradeForm.invalid || loading">
+            {{ loading ? 'Saving...' : 'Save Grade' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

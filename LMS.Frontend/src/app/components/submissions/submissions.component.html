@@ -1,0 +1,30 @@
+<div class="submissions-container">
+  <h1>My Submissions</h1>
+
+  <div *ngIf="loading" class="loading-state">
+    <p>Loading submissions...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="submissions-list">
+    <div *ngFor="let sub of submissions" class="submission-item">
+      <div class="submission-info">
+        <h3>{{ sub.assignmentTitle }}</h3>
+        <p class="submitted-on">Submitted: {{ sub.submissionDate | date:'medium' }}</p>
+        <span class="status-badge" [class.graded]="sub.isGraded">
+          {{ sub.isGraded ? 'Graded: ' + sub.grade : 'Pending Grade' }}
+        </span>
+      </div>
+      <div class="submission-actions">
+        <a [href]="sub.fileUrl" target="_blank" class="btn btn-outline">View File</a>
+      </div>
+    </div>
+
+    <div *ngIf="submissions.length === 0" class="empty-state">
+      <p>No submissions yet.</p>
+    </div>
+  </div>
+</div>
